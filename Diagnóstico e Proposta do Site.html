@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano de Ação — Francisco Leal</title>
+    <style>
+        :root {
+            --primary: #101828;
+            --primary-light: #1d2939;
+            --accent: #c5a059;
+            --accent-dark: #a38445;
+            --text-main: #1d2939;
+            --text-sub: #475467;
+            --bg-soft: #f9fafb;
+            --bg-body: #f2f4f7;
+            --white: #ffffff;
+            --border: #eaecf0;
+            --success: #039855;
+            --warning: #f79009;
+            --error: #d92d20;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* HEADER SECTION */
+        .header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 50px 40px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            top: 0; right: 0;
+            width: 300px; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(197, 160, 89, 0.15));
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            color: #98a2b3;
+            font-size: 15px;
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card .val {
+            font-size: 24px;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-card .lbl {
+            font-size: 12px;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* NAVIGATION TABS */
+        .nav-tabs {
+            display: flex;
+            background: #e4e7ec;
+            padding: 6px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 12px 10px;
+            border: none;
+            background: transparent;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-sub);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .nav-tab:hover {
+            color: var(--primary);
+        }
+
+        .nav-tab.active {
+            background: var(--white);
+            color: var(--primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* PANELS */
+        .panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* SECTION CARDS */
+        .section-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        h2 {
+            font-size: 19px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+        }
+
+        h2::before {
+            content: "";
+            width: 4px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* SCORES BARS */
+        .score-item { margin-bottom: 20px; }
+        .score-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+        .progress-bg { height: 8px; background: #f2f4f7; border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 4px; transition: width 1s ease-out; }
+
+        /* ISSUE CARDS */
+        .issue {
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .issue.crit { background: #fffbfa; border-left-color: var(--error); border-color: #fee4e2; }
+        .issue.warn { background: #fffaeb; border-left-color: var(--warning); border-color: #fef0c7; padding: 14px 18px; }
+        
+        .issue h3 { font-size: 15px; margin-bottom: 6px; color: var(--primary); }
+        .issue.warn h3 { font-size: 14px; margin-bottom: 4px; color: #854f0b; }
+        .issue.crit h3 { color: #b42318; }
+        .issue p { font-size: 13.5px; color: var(--text-sub); }
+        .issue .solution { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.05); font-weight: 600; color: var(--success); font-size: 13px; display: flex; align-items: flex-start; gap: 6px; }
+
+        /* TIMELINE CONTROLS */
+        .tl-controls { 
+            display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; 
+            background: var(--bg-soft); padding: 8px; border-radius: 12px; border: 1px solid var(--border);
+        }
+        .btn-pkg { 
+            flex: 1; padding: 10px 16px; border-radius: 8px; border: 1px solid transparent; 
+            background: transparent; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-sub);
+            transition: all 0.2s; text-align: center; min-width: 130px;
+        }
+        .btn-pkg:hover { color: var(--primary); background: rgba(0,0,0,0.02); }
+        .btn-pkg.active { background: var(--white); color: var(--primary); border-color: var(--border); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+        /* TIMELINE PANELS */
+        .tl-panel { display: none; padding-top: 10px; }
+        .tl-panel.active { display: block; animation: fadeIn 0.3s ease; }
+
+        .phase { position: relative; padding-left: 32px; margin-bottom: 24px; }
+        .phase::before { content: ""; position: absolute; left: 6px; top: 24px; width: 2px; height: calc(100% - 10px); background: var(--border); }
+        .phase:last-child::before { display: none; }
+        .phase::after { content: ""; position: absolute; left: 0; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 3px solid var(--white); box-shadow: 0 0 0 1px var(--border); }
+        
+        .phase-tag { font-size: 11px; font-weight: 700; color: var(--accent-dark); background: #fef6e7; padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 6px; border: 1px solid #f9eedb; }
+        .phase h4 { margin: 0 0 6px; font-size: 15px; color: var(--primary); }
+        .phase p { font-size: 13.5px; color: var(--text-sub); }
+
+        /* TABLES */
+        .table-wrap { overflow-x: auto; margin-bottom: 30px; border-radius: 12px; border: 1px solid var(--border); }
+        .price-table { width: 100%; border-collapse: collapse; background: var(--white); text-align: left; }
+        .price-table th { padding: 14px 16px; background: var(--bg-soft); color: var(--text-sub); font-size: 12px; text-transform: uppercase; border-bottom: 1px solid var(--border); font-weight: 600; }
+        .price-table td { padding: 16px; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text-sub); }
+        .price-table tr:last-child td { border-bottom: none; }
+        .price-table td strong { color: var(--primary); font-weight: 600; }
+        .total-row td { background: var(--bg-soft); font-weight: 700; color: var(--primary); font-size: 15px; }
+
+        .highlight-box { background: #fef6e7; border-left: 4px solid var(--warning); padding: 20px; border-radius: 12px; margin-top: 24px; }
+        .highlight-box p { font-size: 13.5px; color: #854f0b; margin-bottom: 8px; }
+        .highlight-box p:last-child { margin-bottom: 0; }
+        
+        /* LAYOUT DIAGNÓSTICO GRID */
+        .warn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        @media (max-width: 768px) { .warn-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Plano de Ação Digital — franciscoleal.adv.br</h1>
+        <p>Diagnóstico Técnico · Reformulação UX · Automação C-Level · Precificação Estratégica</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card"><span class="val" style="color:var(--error)">7</span><span class="lbl">Problemas Críticos</span></div>
+        <div class="stat-card"><span class="val" style="color:var(--warning)">12</span><span class="lbl">Melhorias Urgentes</span></div>
+        <div class="stat-card"><span class="val" style="color:var(--success)">8</span><span class="lbl">Oportunidades SEO</span></div>
+        <div class="stat-card"><span class="val" style="color:var(--primary)">1 Pág.</span><span class="lbl">Estrutura Atual</span></div>
+    </div>
+
+    <nav class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab(event, 'diagnostico')">🔍 Diagnóstico</button>
+        <button class="nav-tab" onclick="switchTab(event, 'seo')">📈 SEO & Google</button>
+        <button class="nav-tab" onclick="switchTab(event, 'social')">📱 Redes Sociais</button>
+        <button class="nav-tab" onclick="switchTab(event, 'plano')">📋 Plano de Ação</button>
+        <button class="nav-tab" onclick="switchTab(event, 'preco')">💰 Investimento</button>
+    </nav>
+
+    <div id="diagnostico" class="panel active">
+        <div class="section-card">
+            <h2>Score de Saúde do Site Atual</h2>
+            
+            <div class="score-item">
+                <div class="score-info"><span>Search Engine Optimization - SEO Técnico</span><span style="color:var(--error)">15/100</span></div>
+                <div class="progress-bg"><div class="progress-fill" style="width:15%; background:var(--error)"></div></div>
+            </div>
+            <div class="score-item">
+                <div class="score-info"><span>Performance & Velocidade</span><span style="color:var(--warning)">35/100</span></div>
+                <div class="progress-bg"><div class="progress-fill" style="width:35%; background:var(--warning)"></div></div>
+            </div>
+            <div class="score-item">
+                <div class="score-info"><span>Design & Experiência do Usuário (UX)</span><span style="color:var(--warning)">45/100</span></div>
+                <div class="progress-bg"><div class="progress-fill" style="width:45%; background:var(--warning)"></div></div>
+            </div>
+
+            <h3 style="margin: 40px 0 16px; font-size: 16px; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Problemas Críticos (Prioridade Máxima)</h3>
+            
+            <div class="issue crit">
+                <h3>🚨 1. Site bloqueando robôs do Google (HTTP 403)</h3>
+                <p>O servidor retorna erro 403 para o Googlebot e crawlers. O site está praticamente invisível para o Google. Nenhuma quantidade de conteúdo resolve isso enquanto o bloqueio existir.</p>
+                <div class="solution"><span>✔</span> <span>Correção: Ajustar regras do Cloudflare/firewall para liberar User-Agents de bots legítimos.</span></div>
+            </div>
+
+            <div class="issue crit">
+                <h3>🚨 2. Imagem do hero é uma captura de tela</h3>
+                <p>O arquivo de fundo do banner principal é literalmente uma screenshot ("Captura-de-tela..."). O uso de imagens em baixa qualidade no topo do site não é recomendado, ademais de não contextualizar as áreas de atuação do Escritório..</p>
+                <div class="solution"><span>✔</span> <span>Correção: Substituir por foto institucional de alta qualidade do Escritório, de um local reconhecido ou foto profissional do Dr. Francisco.</span></div>
+            </div>
+
+            <div class="issue crit">
+                <h3>🚨 3. Email institucional é Gmail</h3>
+                <p>O email público no rodapé é um Gmail com "2020" no nome (advogadobrasilia2020@gmail.com). Transmite amadorismo para um escritório que vende confiança.</p>
+                <div class="solution"><span>✔</span> <span>Correção: Criar email corporativo escritório@franciscoleal.adv.br ou similar</span></div>
+            </div>
+
+            <div class="issue crit">
+                <h3>🚨 4. Sem meta description nem tags Open Graph</h3>
+                <p>O site não possui meta description (o Google exibe textos aleatórios). Ao compartilhar links no WhatsApp, a página aparece sem imagem de prévia e com título incorreto.</p>
+                <div class="solution"><span>✔</span> <span>Correção: Inserir meta tags focadas em SEO local e configurar o Open Graph/Twitter Card.</span></div>
+            </div>
+
+            <div class="issue crit">
+                <h3>🚨 5. Sem Schema.org (Dados estruturados)</h3>
+                <p>Ausência de código JSON-LD. O Google não consegue interpretar tecnicamente que o site pertence a um escritório de advocacia localizado em Brasília/DF.</p>
+                <div class="solution"><span>✔</span> <span>Correção: Implementar Schema.org tipo LegalService, Attorney e LocalBusiness com dados da OAB.</span></div>
+            </div>
+
+            <div class="issue crit">
+                <h3>🚨 6. Title da página sem keywords</h3>
+                <p>O title atual é apenas "Francisco Leal Adv". É o elemento mais importante para ranqueamento e está desperdiçando termos cruciais (Cidade e Especialidade).</p>
+                <div class="solution"><span>✔</span> <span>Correção: "Francisco Leal Advogado | Brasília/DF – Saúde, Família e Trabalhista"</span></div>
+            </div>
+
+            <div class="issue crit">
+                <h3>🚨 7. Links mortos em todo o site</h3>
+                <p>Todos os ícones de áreas de atuação e botões de agendamento apontam para links falsos (href="#") e não fazem nada. Causa frustração e sinaliza um site inacabado.</p>
+                <div class="solution"><span>✔</span> <span>Correção: Direcionar contatos diretamente para a API do WhatsApp e links internos para as Landing Pages corretas.</span></div>
+            </div>
+
+            <h3 style="margin: 40px 0 16px; font-size: 16px; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 8px;">Problemas Importantes (Melhorias UX & Conversão)</h3>
+            
+            <div class="warn-grid">
+                <div class="issue warn">
+                    <h3>⚠️ 1. Slider com apenas 1 slide</h3>
+                    <p>Carrega arquivos pesados de carrossel sem necessidade, prejudicando a velocidade geral da página.</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 2. Excesso de requisições (CSS/JS)</h3>
+                    <p>O WordPress com Elementor gera mais de 35 arquivos simultâneos, travando o carregamento no celular.</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 3. Fotos sem texto alternativo (Alt Text)</h3>
+                    <p>Imagens sem identificação invisibilizam o Dr. Francisco nas pesquisas do "Google Imagens".</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 4. URLs internas duplicadas (?swcfpc=1)</h3>
+                    <p>Links carregam parâmetros de cache do servidor, o que confunde o motor de busca do Google.</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 5. Falta de Prova Social</h3>
+                    <p>Não há integração com Google Reviews, depoimentos de clientes ou selos de casos de sucesso.</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 6. Sem métricas de autoridade</h3>
+                    <p>A copy do site é genérica. Não apresenta números fortes (anos de experiência, causas ganhas, etc).</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 7. Botão WhatsApp oculto na rolagem</h3>
+                    <p>O cliente precisa subir ou descer até o final do site para achar o contato. Falta um botão flutuante.</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 8. Ausência de Blog Jurídico</h3>
+                    <p>Sem artigos, o site não atrai tráfego de pesquisas do tipo "plano negou cirurgia, o que fazer?".</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 9. Redes Sociais desconectadas</h3>
+                    <p>O site atual não leva o cliente para o Instagram ou LinkedIn, quebrando a construção de autoridade.</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 10. Links de âncora quebrados</h3>
+                    <p>O menu usa #areadeatuacao e o rodapé usa caracteres especiais, causando bugs na rolagem da página.</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 11. Hierarquia de Títulos Confusa</h3>
+                    <p>H1, H2 e H3 estão fora de ordem, o que impede a leitura correta pelos robôs do Google.</p>
+                </div>
+                <div class="issue warn">
+                    <h3>⚠️ 12. Copyright com data errada</h3>
+                    <p>O rodapé diz @2025, enquanto outras imagens são de 2026. Detalhe pequeno, mas reflete desatualização.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="seo" class="panel">
+        <div class="section-card">
+            <h2>Domínio das Buscas Locais (Brasília/DF)</h2>
+            <p style="margin-bottom: 20px; font-size: 14px; color: var(--text-sub);">Estratégia focada em capturar clientes de alta intenção nas áreas de Saúde, Família e Trabalhista.</p>
+
+            <div class="issue" style="border-left-color: var(--primary);">
+                <h3>📊 Relatórios de Alcance e Aumento de Visualizações</h3>
+                <p>Implementação de dashboards dinâmicos (Google Analytics 4 + Search Console) para visibilidade total. Acompanharemos o aumento de tráfego orgânico, os termos exatos que os clientes buscam para encontrar o escritório e a taxa de conversão de visitas em contatos no WhatsApp.</p>
+            </div>
+
+            <div class="issue">
+                <h3>📍 Google Business Profile & Schema.org</h3>
+                <p>Otimização avançada no Google Maps para aparecer no "Local Pack" (os 3 primeiros resultados). Inserção de código oculto (JSON-LD) para o Google entender que se trata de um "LegalService" com OAB, horários e endereço exato.</p>
+            </div>
+
+            <div class="issue">
+                <h3>🔑 Palavras-chave de Alta Conversão</h3>
+                <p>Posicionamento para termos cirúrgicos:<br>
+                • "advogado negativa plano de saúde df"<br>
+                • "liminar urgente saúde brasília"<br>
+                • "advogado inventário especialista df"<br>
+                • "advogado trabalhista demissão brasília"</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="social" class="panel">
+        <div class="section-card">
+            <h2>Reposicionamento de Autoridade Digital</h2>
+            
+            <div class="issue" style="border-left-color: #E1306C;">
+                <h3>📸 Instagram: Foco em Saúde e Família</h3>
+                <p>Criação de linha editorial consultiva.<br>
+                • <strong>Carrosséis:</strong> "5 direitos que seu plano não pode negar", "O que fazer na demissão".<br>
+                • <strong>Reels:</strong> Vídeos curtos com dicas de impacto (maior alcance no DF).<br>
+                • <strong>Bio Otimizada:</strong> Transformar a página em um funil de agendamentos para o WhatsApp.</p>
+            </div>
+
+            <div class="issue" style="border-left-color: #0077B5;">
+                <h3>💼 LinkedIn: Networking e Cases</h3>
+                <p>Produção de artigos jurídicos aprofundados, comentários sobre jurisprudência do TRT10/TJDFT e demonstração de vitórias em casos complexos (respeitando o sigilo) para atrair clientes corporativos.</p>
+            </div>
+
+            <div class="issue" style="border-left-color: #25D366;">
+                <h3>💬 WhatsApp Business Otimizado</h3>
+                <p>Configuração de catálogo, mensagens de ausência, respostas rápidas estruturadas e etiquetas de CRM para gerenciar clientes em atendimento vs. clientes fechados.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="plano" class="panel">
+        <div class="section-card">
+            <h2>Cronograma de Execução (Ciclo de 4 Semanas)</h2>
+            <p style="margin-bottom:20px; font-size:14px; color:var(--text-sub);">Selecione o pacote desejado para visualizar a linha do tempo de entregas semanais.</p>
+
+            <div class="tl-controls">
+                <button class="btn-pkg active" onclick="switchTimeline(event, 'tl-starter')">Pacote Starter</button>
+                <button class="btn-pkg" onclick="switchTimeline(event, 'tl-crescimento')">Crescimento</button>
+                <button class="btn-pkg" onclick="switchTimeline(event, 'tl-autoridade')">Autoridade</button>
+                <button class="btn-pkg" onclick="switchTimeline(event, 'tl-clevel')" style="color:var(--accent-dark); border-color:var(--accent);">C-Level Executivo</button>
+            </div>
+
+            <div id="tl-starter" class="tl-panel active">
+                <div class="phase">
+                    <span class="phase-tag">Semana 1</span>
+                    <h4>Fundação Técnica e Diagnóstico</h4>
+                    <p>Configuração do GitHub Pages, mapeamento de domínio, correção emergencial de segurança (bloqueio 403) e setup do e-mail profissional.</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 2</span>
+                    <h4>Desenvolvimento da Estrutura Web</h4>
+                    <p>Criação da Home Page estática focada em performance, design adaptativo para mobile, e estruturação das categorias de áreas de atuação.</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 3</span>
+                    <h4>SEO Local e On-Page</h4>
+                    <p>Implementação do Schema.org para advogados, metatags, criação da listagem no Google Meu Negócio e otimização de imagens (WebP).</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 4</span>
+                    <h4>Lançamento e Dashboards</h4>
+                    <p>Conexão do Google Search Console, testes Core Web Vitals, entrega do site no ar e alinhamento do painel de métricas de tráfego.</p>
+                </div>
+            </div>
+
+            <div id="tl-crescimento" class="tl-panel">
+                <div class="phase">
+                    <span class="phase-tag">Semana 1</span>
+                    <h4>Infraestrutura Web e Setup Social</h4>
+                    <p>Correções críticas de servidor, setup estático e criação/otimização das contas profissionais no Instagram e WhatsApp Business.</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 2</span>
+                    <h4>Design UX e Criação de Conteúdo</h4>
+                    <p>Codificação da Home + Páginas de Áreas de Atuação. Redação e design dos primeiros roteiros e artes para o Instagram (Saúde/Família).</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 3</span>
+                    <h4>Integração e Agendamentos</h4>
+                    <p>Aprovação das Landing Pages, configuração final do Google Maps e agendamento dos carrosséis/reels do plano Essencial de redes sociais.</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 4</span>
+                    <h4>Go-Live e Distribuição Ativa</h4>
+                    <p>Lançamento do site sincronizado com a campanha orgânica nas redes sociais. Coleta e análise das primeiras métricas de acesso.</p>
+                </div>
+            </div>
+
+            <div id="tl-autoridade" class="tl-panel">
+                <div class="phase">
+                    <span class="phase-tag">Semana 1</span>
+                    <h4>Auditoria Avançada e Redes Integradas</h4>
+                    <p>Resgate de domínios, reposicionamento profundo de marca no Google e padronização visual completa abrangendo Instagram e LinkedIn.</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 2</span>
+                    <h4>Ecossistema Completo e Copywriting</h4>
+                    <p>Criação do site com múltiplas Landing Pages, seções de FAQ ricas, 3 artigos Iniciais para o Blog e roteiros de vídeo para Reels.</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 3</span>
+                    <h4>Link Building e Agendamento em Massa</h4>
+                    <p>Distribuição em diretórios jurídicos de Brasília, ativação do Google Reviews e produção massiva de conteúdo para todo o mês (LinkedIn + Insta).</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 4</span>
+                    <h4>Lançamento Omnichannel</h4>
+                    <p>Implementação final do portal, ativação da máquina de aquisição (Google + Redes Sociais Integradas) e repasse do Dashboard Analítico completo.</p>
+                </div>
+            </div>
+
+            <div id="tl-clevel" class="tl-panel">
+                <div class="phase">
+                    <span class="phase-tag">Semana 1</span>
+                    <h4>Mapeamento C-Level e Fundação Web</h4>
+                    <p>Setup do site e correção do Googlebot. Entrevistas para mapear as rotinas do escritório e estruturar fluxos de automação de agenda com Python/SQL.</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 2</span>
+                    <h4>Sistemas Internos e Front-end</h4>
+                    <p>Desenvolvimento avançado das Landing Pages. Paralelamente, codificação da lógica para rastreamento de andamentos processuais via sistemas dos tribunais.</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 3</span>
+                    <h4>Conteúdo Premium e Automação de WhatsApp</h4>
+                    <p>Produção de toda a grade de redes sociais. Implementação de fluxo via WhatsApp para envio automático de alertas de prazos e lembretes para clientes.</p>
+                </div>
+                <div class="phase">
+                    <span class="phase-tag">Semana 4</span>
+                    <h4>Operação Secretariado Digital Ativada</h4>
+                    <p>Site, SEO e Redes lançados. Passo a atuar efetivamente como Assistente Executivo Digital, gerindo a triagem tecnológica e processual do escritório em tempo real.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="preco" class="panel">
+        <div class="section-card">
+            <h2>Investimento Descontado e Pacotes Integrados</h2>
+            <p style="margin-bottom: 24px; font-size: 14px; color: var(--text-sub);">Valores ajustados com redução estratégica para o estabelecimento de parceria de longo prazo. <br>O modelo focado em GitHub Pages garante <strong>R$ 0,00 de custo mensal com servidores de hospedagem</strong>.</p>
+
+            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--primary);">Serviço 1 — Novo Site Premium (Pagamento Único)</h3>
+            <div class="table-wrap">
+                <table class="price-table">
+                    <thead><tr><th>Item</th><th>Descrição</th><th>Valor</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Diagnóstico & Design</strong></td><td>Auditoria, layout UX/UI, paleta, tipografia</td><td>R$ 300,00</td></tr>
+                        <tr><td><strong>Desenvolvimento Code</strong></td><td>Site HTML/CSS/JS (1 Home + 5 Landing Pages + Blog)</td><td>R$ 600,00</td></tr>
+                        <tr><td><strong>SEO On-Page & Copy</strong></td><td>Redação de 5 LPs, 3 artigos, metatags, schema.org</td><td>R$ 535,00</td></tr>
+                        <tr><td><strong>Deploy & Configurações</strong></td><td>Setup GitHub Pages, SSL, DNS, Analytics 4</td><td>R$ 115,00</td></tr>
+                        <tr class="total-row"><td>Total Site</td><td>(Redução de 1/3 aplicada)</td><td>R$ 1.550,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--primary);">Serviço 2 — Reposicionamento Google (Pagamento Único)</h3>
+            <div class="table-wrap">
+                <table class="price-table">
+                    <thead><tr><th>Item</th><th>Descrição</th><th>Valor</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Fix Técnico & Schema</strong></td><td>Liberação Googlebot (403) e JSON-LD Legal</td><td>R$ 225,00</td></tr>
+                        <tr><td><strong>Google Local & Links</strong></td><td>Otimização Meu Negócio e diretórios jurídicos</td><td>R$ 275,00</td></tr>
+                        <tr><td><strong>Relatório Keywords</strong></td><td>Mapeamento de buscas locais DF</td><td>R$ 150,00</td></tr>
+                        <tr class="total-row"><td>Total Reposicionamento</td><td>(Redução de 50% aplicada)</td><td>R$ 650,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--primary);">Serviço 3 — Gestão de Redes Sociais (Mensalidade)</h3>
+            <div class="table-wrap">
+                <table class="price-table">
+                    <thead><tr><th>Plano</th><th>Incluso</th><th>Valor / Mês</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Essencial</strong></td><td>Insta: 12 posts/mês (Carrosséis + Reels + Copy)</td><td>R$ 267,00</td></tr>
+                        <tr><td><strong>Completo</strong></td><td>Insta + LinkedIn (16 conteúdos + Gestão Stories)</td><td>R$ 467,00</td></tr>
+                        <tr><td><strong>Premium</strong></td><td>Completo + Artigos Blog + Gestão WhatsApp/Reviews</td><td>R$ 667,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="font-size: 16px; margin: 40px 0 12px; color: var(--accent-dark); border-bottom: 2px solid var(--accent); padding-bottom: 6px; display: inline-block;">Serviço 4 — Assistente Executivo Digital C-Level</h3>
+            <div class="table-wrap" style="border-color: var(--accent);">
+                <table class="price-table">
+                    <tbody>
+                        <tr>
+                            <td style="padding: 24px; font-size: 14.5px;">
+                                <strong style="color: var(--primary); font-size: 18px; display: block; margin-bottom: 12px;">Solução Integrada de Ponta a Ponta</strong>
+                                Engloba absolutamente <strong>todos os serviços de Setup (Site + Google) e o Plano Social Premium</strong> sem custos adicionais de criação.<br><br>
+                                Adicionalmente, consolida minha expertise governamental e de mercado: aplico minhas habilidades de programação e bancos de dados (Python/SQL) com minha formação profissional inclusa em Secretariado Executivo.<br><br>
+                                <strong>Adaptação Direta para a Área Judiciária:</strong><br>
+                                • Automação inteligente de WhatsApp para clientes.<br>
+                                • Acompanhamento automatizado e disparos de alertas sobre prazos processuais.<br>
+                                • Gestão de agenda executiva refinada.<br>
+                                • Suporte tecnológico completo para o escritório.<br>
+                                <em>(Saiba mais sobre meu perfil, atuação na saúde e sistemas: <a href="http://www.abelogliari.com.br" target="_blank" style="color: var(--accent-dark); font-weight: 600;">www.abelogliari.com.br</a>)</em>
+                            </td>
+                            <td style="background: #fdfaf3; text-align: center; vertical-align: middle; padding: 24px;">
+                                <span style="font-size: 13px; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px;">Mensalidade</span><br>
+                                <strong style="font-size: 28px; color: var(--accent-dark);">R$ 4.000</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong>Resumo para Tomada de Decisão:</strong></p>
+                <p>• <strong>Pacote Starter (Apenas Setup Digital):</strong> R$ 1.550 (Pagamento Único)</p>
+                <p>• <strong>Pacote Autoridade (Setup + Recorrência):</strong> R$ 2.200,00 + R$ 667/mês</p>
+                <p>• <strong>C-Level Integrado (All-in-One + Secretariado Automático):</strong> R$ 4.000,00/mês</p>
+                <p style="margin-top: 12px; font-size: 12.5px; opacity: 0.8;">*Custo à parte pago pelo cliente: Renovação anual do domínio Registro.br (~R$ 40/ano).</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Navegação Principal das Abas
+    function switchTab(evt, tabId) {
+        // Esconde todos os painéis
+        const panels = document.querySelectorAll('.panel');
+        panels.forEach(panel => panel.classList.remove('active'));
+
+        // Remove a classe 'active' de todos os botões de tab
+        const tablinks = document.querySelectorAll('.nav-tab');
+        tablinks.forEach(tab => tab.classList.remove('active'));
+
+        // Mostra o painel atual e adiciona classe 'active' ao botão clicado
+        document.getElementById(tabId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    // Navegação Interna da Linha do Tempo (Plano de Ação)
+    function switchTimeline(evt, timelineId) {
+        // Esconde todos os painéis de timeline
+        const tlPanels = document.querySelectorAll('.tl-panel');
+        tlPanels.forEach(panel => panel.classList.remove('active'));
+
+        // Remove a classe 'active' dos botões de pacote
+        const tlBtns = document.querySelectorAll('.btn-pkg');
+        tlBtns.forEach(btn => btn.classList.remove('active'));
+
+        // Ativa o conteúdo e o botão selecionado
+        document.getElementById(timelineId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
