@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(copy \"c:\\\\Users\\\\Casa\\\\Desktop\\\\FranciscoLeal\\\\Francisco Leal Adv_files\\\\kxk1ue.jpeg\" \"c:\\\\Users\\\\Casa\\\\Desktop\\\\FranciscoLeal\\\\images\\\\kxk1ue.jpeg\")",
-      "Bash(cp \"c:/Users/Casa/Desktop/FranciscoLeal/Francisco Leal Adv_files/kxk1ue.jpeg\" \"c:/Users/Casa/Desktop/FranciscoLeal/images/kxk1ue.jpeg\")"
+      "Bash(cp \"c:/Users/Casa/Desktop/FranciscoLeal/Francisco Leal Adv_files/kxk1ue.jpeg\" \"c:/Users/Casa/Desktop/FranciscoLeal/images/kxk1ue.jpeg\")",
+      "Bash(git config *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\Casa\\Desktop\\FranciscoLeal\\Francisco Leal Adv_files"
