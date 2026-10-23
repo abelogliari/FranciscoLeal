@@ -514,6 +514,19 @@
        AREAS (DETAILED)
        ============================================================ */
     .areas-bg { background: var(--color-bg-alt); }
+    .areas-photo {
+      margin: 0 0 48px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .areas-photo img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      object-position: center 30%;
+    }
     .areas-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -903,6 +916,7 @@
       .nav-cta .btn-text-desktop { display: none; }
       .cards { grid-template-columns: 1fr; }
       .areas-list { grid-template-columns: 1fr; }
+      .areas-photo img { aspect-ratio: 4 / 3; }
       .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
       .testimonials-grid, .blog-grid, .footer-grid { grid-template-columns: 1fr; }
       .about-credentials { flex-wrap: wrap; gap: 20px; }
@@ -1140,6 +1154,10 @@
       <h2 id="areas-title">Atuação jurídica <em>especializada</em></h2>
       <p>Conheça em detalhe as frentes de trabalho do escritório, sempre com estratégia individualizada para cada caso.</p>
     </div>
+
+    <figure class="areas-photo reveal">
+      <img src="francisco.jpg" alt="Dr. Francisco Leal analisando documentos em seu escritório em Brasília/DF." loading="lazy">
+    </figure>
 
     <div class="areas-list">
       <article class="area-item reveal">
